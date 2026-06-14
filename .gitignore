@@ -17,3 +17,7 @@ scripts/
 # Paid strategy module — not included in free framework
 bot/engines/sniper.py
 download/
+
+# Wallet scanner
+stats.json
+found.txt
