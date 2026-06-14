@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.log
+.pytest_cache/
+.mypy_cache/
+
+# Paid strategy module — not included in free framework
+bot/engines/sniper.py
+download/
