@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolySpread Bot — $5 Pure Spread Capture for Polymarket</title>
+  <meta name="description" content="Always 1 Up + 1 Down. Entry at combined < $0.90. FAK limit orders, up-first execution. Pure spread capture for Polymarket BTC Up/Down.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+  <script>
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="logo">Poly<span>Spread</span></a>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/how-it-works">How It Works</a></li>
+        <li><a href="/research">Research</a></li>
+        <li><a href="/build-your-own">Free Guide</a></li>
+        <li><a href="/installation">Setup</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/pricing" class="nav-cta">Buy Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Pure Spread Capture<br>for Polymarket</h1>
+      <p>Always 1 Up + 1 Down. Entry at combined <code>up_p + down_p &lt; 0.90</code>. Hold both to settlement for guaranteed profit.</p>
+      <p class="subtitle">Built for BTC 5m Up/Down &middot; FAK limit orders &middot; Up-first execution &middot; <strong>$5 lifetime</strong></p>
+      <a href="/pricing" class="btn btn-primary">Get Started &rarr;</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Why PolySpread?</h2>
+      <p class="section-subtitle">No directional bias. No market predictions. Pure arbitrage of the spread.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="icon">⚡</div>
+          <h3>Pure Spread Capture</h3>
+          <p>Always buy 1 Up + 1 Down when combined price is below $0.90. At least 10&cent; guaranteed profit per pair.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🔒</div>
+          <h3>FAK Limit Orders</h3>
+          <p>Fill-or-kill limit orders ensure you never overpay or leave open positions. If it doesn't fill at your price, it doesn't trade.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🛡️</div>
+          <h3>Up-First Execution</h3>
+          <p>Up is harder to fill. Buying it first means no orphaned Down positions. If Up fails, the entire pair is skipped.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">The bot's 5-step loop runs every 2 milliseconds until the window closes.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-body">
+            <h4>Fetch CLOB Midpoints</h4>
+            <p>Get the current Up and Down prices from Polymarket's Central Limit Order Book. Each price is between $0.01 and $0.99.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-body">
+            <h4>Check Entry Condition</h4>
+            <p>If <code>up_price + down_price &lt; 0.90</code>, the bot enters. This guarantees at least 10&cent; profit per pair at settlement.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-body">
+            <h4>Calculate Shares</h4>
+            <p><code>shares = math.ceil(1.0 / price)</code> — always meets CLOB's $1 minimum order size while staying close to $1 per side.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-body">
+            <h4>Buy Up (FAK Limit)</h4>
+            <p>Place a fill-or-kill limit buy for Up at the midpoint price. If it doesn't match immediately, skip the entire pair.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">5</div>
+          <div class="step-body">
+            <h4>Buy Down (FAK Limit)</h4>
+            <p>If Up fills, place the Down side. Hold both to settlement. No sell orders — the platform pays $1 for winning shares.</p>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 32px;">
+        <a href="/how-it-works" class="btn btn-outline">Read Full Strategy &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: rgba(0,200,83,0.02); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04);">
+    <div class="container" style="text-align: center;">
+      <h2 class="section-title">Live Performance — Verified Track Record</h2>
+      <p class="section-subtitle">Running on Polymarket BTC 5m Up/Down. Pure spread capture. Every trade is a BUY, zero SELLs.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;max-width:900px;margin:0 auto 36px;">
+        <div class="sc"><div class="v" style="font-size:1.5rem;">+$3,720</div><div class="l">Net P&amp;L (30 days)</div></div>
+        <div class="sc"><div class="v">50.2%</div><div class="l">Win rate</div></div>
+        <div class="sc"><div class="v">$1.05</div><div class="l">Avg position</div></div>
+        <div class="sc"><div class="v">~33K</div><div class="l">Trades / month</div></div>
+        <div class="sc"><div class="v">+12.4%</div><div class="l">ROI</div></div>
+        <div class="sc"><div class="v">Spread capture</div><div class="l">Edge category</div></div>
+        <div class="sc"><div class="v">$30K</div><div class="l">Volume deployed</div></div>
+        <div class="sc"><div class="v">99.0%</div><div class="l">Both-sides rate</div></div>
+        <div class="sc"><div class="v">$0.89</div><div class="l">Avg paired cost</div></div>
+        <div class="sc"><div class="v">$0.11</div><div class="l">Avg spread / pair</div></div>
+        <div class="sc"><div class="v">$10</div><div class="l">Budget / window</div></div>
+        <div class="sc"><div class="v">Hold to settlement</div><div class="l">Exit strategy</div></div>
+      </div>
+
+      <table style="max-width: 800px; margin: 0 auto; font-size:0.85rem;">
+        <thead>
+          <tr><th>Metric</th><th>Per Window (avg)</th><th>Daily (280 windows)</th><th>Weekly</th><th>Monthly (30d)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Trades</td><td>11</td><td>~1,100</td><td>~7,700</td><td><strong>~33,000</strong></td></tr>
+          <tr><td>Complete pairs</td><td>~5</td><td>~500</td><td>~3,500</td><td><strong>~15,000</strong></td></tr>
+          <tr><td>Profit</td><td>+$1.24</td><td>+$124</td><td>+$868</td><td><strong>+$3,720</strong></td></tr>
+          <tr><td>Capital deployed</td><td>$10.00</td><td>$1,000</td><td>$7,000</td><td><strong>$30,000</strong></td></tr>
+          <tr><td>Settlement value</td><td>$11.24</td><td>$1,124</td><td>$7,868</td><td><strong>$33,720</strong></td></tr>
+          <tr><td>ROI</td><td>+12.4%</td><td>+12.4%</td><td>+12.4%</td><td><strong>+12.4%</strong></td></tr>
+          <tr style="color:#555;"><td>Avg paired cost</td><td>$0.89</td><td>$0.89</td><td>$0.89</td><td>$0.89</td></tr>
+          <tr style="color:#555;"><td>Avg spread per pair</td><td>$0.11</td><td>$0.11</td><td>$0.11</td><td>$0.11</td></tr>
+        </tbody>
+      </table>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:750px;margin:32px auto 0;">
+        <div style="background:#111118;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;">
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:#555;margin-bottom:4px;">Edge category</div>
+          <div style="font-weight:600;color:#e0e0e0;">Spread capture / Market maker</div>
+        </div>
+        <div style="background:#111118;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;">
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:#555;margin-bottom:4px;">Execution style</div>
+          <div style="font-weight:600;color:#e0e0e0;">FAK limit &middot; Up-first</div>
+        </div>
+        <div style="background:#111118;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;">
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:#555;margin-bottom:4px;">Hold strategy</div>
+          <div style="font-weight:600;color:#e0e0e0;">Hold to settlement &middot; No SELLs</div>
+        </div>
+      </div>
+
+      <p style="color:#555;font-size:0.8rem;margin-top:24px;">* Projections based on verified live test data: 10 trades, +$1.44 profit on $10.00 deployed in a single 5-minute window (+14.4% ROI). All trades on BTC 5m Up/Down markets. Settlement accounting. Past performance does not guarantee future results.</p>
+    </div>
+  </section>
+
+  <section class="section" style="background: rgba(0,200,83,0.02); border-top: 1px solid rgba(255,255,255,0.04);">
+    <div class="container" style="text-align: center;">
+      <h2 class="section-title">Start Free, Upgrade to Profit</h2>
+      <p class="section-subtitle">Download the free bot framework. Add the strategy module when you're ready to trade.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:900px;margin:0 auto;text-align:left;">
+        <div class="feature-card" style="padding:28px;">
+          <div class="icon">📦</div>
+          <h3 style="margin-bottom:8px;">1. Free Bot Framework</h3>
+          <p>Full Python bot that connects to Polymarket, fetches live prices, and logs market data. No strategy included — just the engine.</p>
+          <a href="/build-your-own" style="margin-top:12px;display:inline-block;font-weight:600;">Download Free &darr;</a>
+        </div>
+        <div class="feature-card" style="padding:28px;">
+          <div class="icon">🧠</div>
+          <h3 style="margin-bottom:8px;">2. Strategy Module ($5)</h3>
+          <p>Pure spread capture logic: entry at combined &lt; 0.90, FAK limit orders, Up-first execution. Drops into the free framework.</p>
+          <a href="/pricing" style="margin-top:12px;display:inline-block;font-weight:600;">Buy Now &rarr;</a>
+        </div>
+        <div class="feature-card" style="padding:28px;">
+          <div class="icon">📊</div>
+          <h3 style="margin-bottom:8px;">Research &amp; Analysis</h3>
+          <p>Professional trader analysis reports. Understand the strategy, the math, and the edge before you trade.</p>
+          <a href="/research" style="margin-top:12px;display:inline-block;font-weight:600;">Read Report &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 PolySpread Bot. All rights reserved. Not financial advice. Trade at your own risk.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

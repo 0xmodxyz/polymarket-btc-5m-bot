@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Bot — Polymarket Trading Bot Framework</title>
+  <meta name="description" content="Download the free Polymarket trading bot framework. Connects to live price feeds. Upgrade with strategy module for automated spread capture.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dl-card { background: linear-gradient(180deg, rgba(0,200,83,0.06) 0%, #111118 100%); border: 1px solid rgba(0,200,83,0.2); border-radius: 16px; padding: 40px; text-align: center; max-width: 600px; margin: 32px auto; }
+    .dl-card h2 { font-size: 1.5rem; color: #fff; margin-bottom: 8px; }
+    .dl-card .price-badge { display: inline-block; background: rgba(0,200,83,0.15); color: #00c853; font-weight: 700; padding: 4px 16px; border-radius: 20px; font-size: 0.85rem; margin-bottom: 16px; }
+    .dl-card p { color: #888; margin-bottom: 24px; }
+    .dl-card .file-info { font-size: 0.8rem; color: #555; margin-top: 12px; }
+    .file-tree { background: #111118; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #888; line-height: 2; }
+    .file-tree .highlight { color: #00c853; }
+    .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0; }
+    .step-card { background: #111118; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px; }
+    .step-card h3 { font-size: 1rem; color: #fff; margin-bottom: 8px; }
+    .step-card h3 .num { color: #00c853; }
+    .step-card p { font-size: 0.85rem; color: #888; }
+    .step-card code { font-size: 0.8rem; color: #ccc; }
+    .upgrade-box { text-align: center; background: #111118; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 40px; margin: 32px 0; }
+    .upgrade-box h3 { font-size: 1.3rem; color: #fff; margin-bottom: 8px; }
+    .upgrade-box p { color: #888; max-width: 500px; margin: 0 auto 20px; }
+    .feature-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 32px 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
+    .feature-col { padding: 24px; }
+    .feature-col.free { background: #111118; }
+    .feature-col.paid { background: linear-gradient(180deg, rgba(0,200,83,0.04) 0%, #111118 100%); }
+    .feature-col h4 { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+    .feature-col.free h4 { color: #888; }
+    .feature-col.paid h4 { color: #00c853; }
+    .feature-col ul { list-style: none; }
+    .feature-col li { padding: 6px 0; font-size: 0.85rem; color: #999; border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .feature-col li:last-child { border-bottom: none; }
+    .feature-col li .check { color: #00c853; }
+    .feature-col li .cross { color: #555; }
+    .feature-col .price-tag { font-size: 1.8rem; font-weight: 800; margin: 16px 0; }
+    .feature-col.free .price-tag { color: #888; }
+    .feature-col.paid .price-tag { color: #00c853; }
+  </style>
+  <script>
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="logo">Poly<span>Spread</span></a>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/how-it-works">How It Works</a></li>
+        <li><a href="/research">Research</a></li>
+        <li><a href="/build-your-own">Free Bot</a></li>
+        <li><a href="/installation">Setup</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/pricing" class="nav-cta">Buy Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="container">
+      <p style="color:#00c853;font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Free Download</p>
+      <h1>Polymarket Trading Bot Framework</h1>
+      <p>Connect to live price feeds, resolve markets, and see real-time data. Free forever. Upgrade with a strategy module to trade automatically.</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+
+      <div class="dl-card">
+        <div class="price-badge">FREE &mdash; No credit card</div>
+        <h2>Download the Free Bot Framework</h2>
+        <p>Python 3.10+ &middot; Windows / macOS / Linux &middot; ~15 KB ZIP</p>
+        <a href="download/polymarket-free-bot.zip" class="btn btn-primary" download style="font-size:1.05rem;padding:16px 48px;">Download Free Bot &darr;</a>
+        <div class="file-info">polymarket-free-bot.zip &bull; 15 KB</div>
+      </div>
+
+      <h2 style="font-size:1.3rem;font-weight:700;color:#fff;margin-top:48px;">What's Included</h2>
+      <div class="file-tree">
+<pre>polymarket-free-bot/
+├── .env.example              # Your API credentials template
+├── requirements.txt           # Python dependencies
+├── README.md                  # Quick start guide
+├── main.py                    # Entry point — run with: python main.py
+└── bot/
+    ├── __init__.py
+    ├── config.py              # Settings loader from .env
+    ├── client.py              # Polymarket CLOB client wrapper
+    ├── engine.py              # Window management + loop
+    ├── executor.py            # Trade executor (sim + live)
+    ├── feeds.py               # Price feeds (Binance, CLOB, RTDS)
+    ├── markets.py             # Market resolution via Gamma API
+    ├── orders.py              # Order placement (limit, market, FAK)
+    └── <span class="highlight">engines/</span>                 # ← YOUR STRATEGY GOES HERE</pre>
+      </div>
+
+      <div class="step-grid">
+        <div class="step-card">
+          <h3><span class="num">1</span> Download &amp; Extract</h3>
+          <p>Download the ZIP above and extract it anywhere on your machine.</p>
+        </div>
+        <div class="step-card">
+          <h3><span class="num">2</span> Configure .env</h3>
+          <p>Copy <code>.env.example</code> to <code>.env</code>. Add your Polymarket API key, secret, passphrase, and wallet private key.</p>
+        </div>
+        <div class="step-card">
+          <h3><span class="num">3</span> Install Dependencies</h3>
+          <p><code>pip install -r requirements.txt</code></p>
+        </div>
+        <div class="step-card">
+          <h3><span class="num">4</span> Run the Demo</h3>
+          <p><code>python main.py --cycles 1</code></p>
+          <p style="margin-top:4px;">The bot will connect to price feeds and log market data to your console.</p>
+        </div>
+      </div>
+
+      <h2 style="font-size:1.3rem;font-weight:700;color:#fff;margin-top:48px;">Free vs Paid — Feature Comparison</h2>
+
+      <div class="feature-compare">
+        <div class="feature-col free">
+          <h4>Free Framework</h4>
+          <div class="price-tag">$0</div>
+          <ul>
+            <li><span class="check">&#10003;</span> Live price feed connection</li>
+            <li><span class="check">&#10003;</span> Market resolution (Gamma API)</li>
+            <li><span class="check">&#10003;</span> CLOB order book polling</li>
+            <li><span class="check">&#10003;</span> Simulated order tracking</li>
+            <li><span class="check">&#10003;</span> .env credential management</li>
+            <li><span class="cross">&#10007;</span> Spread capture strategy</li>
+            <li><span class="cross">&#10007;</span> Automated trade execution</li>
+            <li><span class="cross">&#10007;</span> P&amp;L tracking</li>
+          </ul>
+        </div>
+        <div class="feature-col paid">
+          <h4>With Strategy Module</h4>
+          <div class="price-tag">$5 <span style="font-size:1rem;font-weight:400;color:#666;">lifetime</span></div>
+          <ul>
+            <li><span class="check">&#10003;</span> Live price feed connection</li>
+            <li><span class="check">&#10003;</span> Market resolution (Gamma API)</li>
+            <li><span class="check">&#10003;</span> CLOB order book polling</li>
+            <li><span class="check">&#10003;</span> Real order execution</li>
+            <li><span class="check">&#10003;</span> .env credential management</li>
+            <li><span class="check">&#10003;</span> <strong>Pure spread capture</strong></li>
+            <li><span class="check">&#10003;</span> <strong>FAK limit orders</strong></li>
+            <li><span class="check">&#10003;</span> <strong>Profit tracking</strong></li>
+          </ul>
+          <a href="/pricing" class="btn btn-primary" style="margin-top:12px;">Buy Strategy &rarr;</a>
+        </div>
+      </div>
+
+      <div class="upgrade-box">
+        <h3>Ready to Trade Automatically?</h3>
+        <p>The free framework connects and shows prices. The strategy module adds the brain — spread capture logic that trades for you.</p>
+        <a href="/pricing" class="btn btn-primary">Get the Strategy Module &rarr;</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 PolySpread Bot. All rights reserved. Not financial advice. Trade at your own risk.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

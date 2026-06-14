@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works — PolySpread Bot</title>
+  <meta name="description" content="Full strategy breakdown: entry condition, share calculation, execution order, risk controls, and example runs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="logo">Poly<span>Spread</span></a>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/how-it-works">How It Works</a></li>
+        <li><a href="/research">Research</a></li>
+        <li><a href="/build-your-own">Free Guide</a></li>
+        <li><a href="/installation">Setup</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/pricing" class="nav-cta">Buy Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>How PolySpread Works</h1>
+      <p>Pure spread capture. No directional bias. No market predictions.</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+
+      <h2>Strategy Overview</h2>
+      <p>PolySpread is a pure spread-capture bot for Polymarket's BTC Up/Down prediction markets. It simultaneously buys one Up share and one Down share whenever their combined price is below $0.90, locks in the difference, and holds both to settlement. At settlement, exactly one side pays $1.00, yielding a guaranteed profit of <code>$1.00 - (up_price + down_price)</code> per pair.</p>
+      <p>This is not a directional trading strategy. The bot does not predict whether BTC will go up or down. It simply exploits temporary pricing inefficiencies in the order book.</p>
+
+      <h2>Entry Condition</h2>
+      <p>The only condition for entering a trade is that the combined price of Up and Down is below $0.90:</p>
+      <pre><code><span class="keyword">if</span> up_price + down_price &lt; <span class="number">0.90</span>:
+    <span class="comment"># Enter trade — at least 10¢ guaranteed profit</span>
+    enter_pair()</code></pre>
+      <p>There is no per-side price cap. A pair at 55&cent; + 30&cent; = 85&cent; is just as valid as 48&cent; + 40&cent; = 88&cent;. Only the combined sum matters because profit = <code>$1.00 - (up + down)</code> regardless of per-side allocation.</p>
+
+      <div class="info-box">
+        <h4>Why combined only?</h4>
+        <p>Profit at settlement is always $1.00 per winning share. If you paid 55&cent; + 30&cent; = 85&cent; total, your profit is 15&cent; regardless of which side wins. Per-side caps would exclude profitable pairs like 55&cent; + 30&cent;.</p>
+      </div>
+
+      <h2>Share Calculation</h2>
+      <p>Polymarket's CLOB enforces a <strong>$1 minimum per order</strong>. To stay close to the $1 target while meeting this requirement, the bot uses ceiling division:</p>
+      <pre><code>shares = math.ceil(<span class="number">1.0</span> / price)</code></pre>
+      <p>At 48&cent;: <code>ceil(1.0 / 0.48) = 3</code> shares &rarr; costs $1.44 (above $1 min)<br>At 5&cent;: <code>ceil(1.0 / 0.05) = 20</code> shares &rarr; costs $1.00 (at $1 min)<br>At 50&cent;: <code>ceil(1.0 / 0.50) = 2</code> shares &rarr; costs $1.00 (at $1 min)</p>
+
+      <div class="info-box warning">
+        <h4>Why not floor?</h4>
+        <p><code>int(1.0 / 0.55) = 1</code> share at 55&cent; = $0.55 order — CLOB rejects this as below minimum. Ceiling ensures every order meets the $1 requirement.</p>
+      </div>
+
+      <h2>Execution Order</h2>
+      <p>Execution order matters for preventing orphaned positions:</p>
+      <pre><code><span class="number">1.</span> Buy Up (FAK limit)  <span class="comment"># Harder to fill (pricier)</span>
+<span class="number">2.</span> <span class="keyword">if</span> Up filled:
+        Buy Down (FAK limit)  <span class="comment"># Easier to fill (cheaper)</span>
+    <span class="keyword">else</span>:
+        Skip pair entirely</code></pre>
+      <p>Up is typically more expensive (68&cent;-94&cent; range) and harder to fill. By buying it first, we ensure we never hold a Down position without its Up pair. If Up doesn't fill, the entire pair is abandoned.</p>
+
+      <div class="info-box">
+        <h4>Up-first prevents orphaned Downs</h4>
+        <p>Down fills easily at 5-11&cent;. If we bought Down first and Up failed to fill, we'd hold a useless Down share. Up-first execution eliminates this risk entirely.</p>
+      </div>
+
+      <h2>Order Type: FAK Limit</h2>
+      <p>All orders use <strong>Fill-or-Kill (FAK) limit orders</strong>:</p>
+      <ul>
+        <li><strong>Fill-or-Kill</strong>: The order either fills immediately at the target price or is cancelled. No resting orders linger in the book.</li>
+        <li><strong>Limit price</strong>: We specify the exact price we're willing to pay. If no seller exists at that price, the order fails — no overpaying.</li>
+        <li><strong>No market orders</strong>: Market buys were filling at 100&cent;. FAK ensures we only trade at our calculated price.</li>
+      </ul>
+
+      <h2>Risk Controls</h2>
+      <table>
+        <thead>
+          <tr><th>Control</th><th>Value</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Deadline protection</td><td>90s before window end</td><td>No trades in final 90 seconds — too close to resolution</td></tr>
+          <tr><td>Per-side max spend</td><td>$5 per side per window</td><td>Limits exposure to $10 total per window</td></tr>
+          <tr><td>Hard price floor</td><td>$0.05</td><td>Ignore shares priced below 5&cent; — no edge</td></tr>
+          <tr><td>Cooldown between trades</td><td>2 seconds</td><td>Prevents rapid-fire entries</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Hold to Settlement</h2>
+      <p>The bot <strong>never sells</strong>. Every purchased share is held until the window resolves. At settlement, the winning side automatically pays $1.00 per share. No exit management needed.</p>
+
+      <div class="info-box">
+        <h4>How settlement works</h4>
+        <p>Polymarket resolves each window against Chainlink's BTC/USD data stream. If BTC ends higher than at window start, Up shares pay $1.00 and Down pays $0.00 — and vice versa. The bot always holds both, so it always receives exactly $1.00 per pair.</p>
+      </div>
+
+      <h2>Example: Simulated Window Run</h2>
+      <p>Here's what one 5-minute window looked like in simulation mode (no real money):</p>
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Total trades</td><td>12</td></tr>
+          <tr><td>Complete pairs</td><td>6</td></tr>
+          <tr><td>Total spend</td><td>$9.93</td></tr>
+          <tr><td>Theoretical profit</td><td>$1.07 (~11%)</td></tr>
+          <tr><td>Settlement value</td><td>$11.00 (if Down won)</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Key Design Decisions</h2>
+      <table>
+        <thead>
+          <tr><th>Decision</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Combined &lt; 0.90, no per-side cap</td><td>Per-side 50&cent; cap made combined &lt; 0.90 impossible. Only combined price matters for profit.</td></tr>
+          <tr><td>Up-first execution</td><td>Down fills at 5-11&cent; (easy). Without Up pair it's orphaned. Up-first avoids this.</td></tr>
+          <tr><td>FAK over GTC limit orders</td><td>FAK = immediate fill-or-kill. GTC needs order management and cancellation on window end.</td></tr>
+          <tr><td><code>ceil(1.0/price)</code> over <code>int(1.0/price)</code></td><td>CLOB enforces $1 minimum. <code>int</code> gives $0.50-$0.90 &rarr; rejected. <code>ceil</code> ensures &ge;$1.00.</td></tr>
+          <tr><td>No SELLs</td><td>Hold to settlement. Platform pays $1 for winning shares automatically.</td></tr>
+        </tbody>
+      </table>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 PolySpread Bot. All rights reserved. Not financial advice. Trade at your own risk.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

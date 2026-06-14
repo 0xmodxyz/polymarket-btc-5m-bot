@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation — PolySpread Bot</title>
+  <meta name="description" content="Step-by-step installation guide for the PolySpread Polymarket trading bot. From .env setup to live trading.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="logo">Poly<span>Spread</span></a>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/how-it-works">How It Works</a></li>
+        <li><a href="/research">Research</a></li>
+        <li><a href="/build-your-own">Free Guide</a></li>
+        <li><a href="/installation">Setup</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/pricing" class="nav-cta">Buy Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Installation &amp; Setup Guide</h1>
+      <p>Get PolySpread running in 10 minutes. From zero to live trading.</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li><strong>Python 3.10+</strong> installed locally</li>
+        <li>A <strong>Polymarket account</strong> with API access</li>
+        <li>A <strong>Polygon wallet</strong> with pUSD (see funding guide below)</li>
+        <li><strong>MATIC/POL</strong> for gas (a few cents worth)</li>
+      </ul>
+
+      <div class="info-box warning">
+        <h4>Need pUSD?</h4>
+        <p>If you don't have pUSD in your wallet yet: buy USDC on an exchange, withdraw to Polygon network, then wrap to pUSD via Polymarket's CollateralOnramp. Full guide in Step 2 of <a href="https://www.polyresearchrobotics.com/guide/how-to-build-a-polymarket-trading-bot" target="_blank">this tutorial</a>.</p>
+      </div>
+
+      <h2>Step 1: Download the Bot</h2>
+      <p>After purchasing, you'll receive the source code as a ZIP file or GitHub repository link. Extract it to a folder:</p>
+      <pre><code><span class="comment"># Example folder structure after extraction</span>
+polymarket-spread-bot/
+  bot/
+  main.py
+  requirements.txt
+  .env.example
+  README.md</code></pre>
+
+      <h2>Step 2: Configure Environment</h2>
+      <p>Copy <code>.env.example</code> to <code>.env</code> and fill in your credentials:</p>
+      <pre><code><span class="comment"># Polymarket CLOB API credentials (from polymarket.com Settings &rarr; API)</span>
+POLY_API_KEY=your_api_key_here
+POLY_API_SECRET=your_api_secret_here
+POLY_API_PASSPHRASE=your_passphrase_here
+
+<span class="comment"># Wallet addresses</span>
+POLYMARKET_FUNDER=0xyour_funder_wallet_address
+POLYMARKET_PRIVATE_KEY=0xyour_private_key_here
+
+<span class="comment"># Trading parameters</span>
+MAX_BUDGET_USD=50
+MAX_PER_WINDOW_USD=5</code></pre>
+
+      <div class="info-box error">
+        <h4>Never commit .env to git!</h4>
+        <p>Your private key gives full wallet access. Add <code>.env</code> to <code>.gitignore</code> before your first commit.</p>
+      </div>
+
+      <h2>Step 3: Install Dependencies</h2>
+      <pre><code><span class="comment"># Create and activate virtual environment (recommended)</span>
+python -m venv venv
+<span class="comment"># Windows:</span> venv\Scripts\activate
+<span class="comment"># macOS/Linux:</span> source venv/bin/activate
+
+<span class="comment"># Install requirements</span>
+pip install -r requirements.txt</code></pre>
+
+      <h2>Step 4: Run Simulation Test</h2>
+      <p>Before trading real money, run a simulation to verify everything works:</p>
+      <pre><code>python main.py --mode sim --budget <span class="number">10</span> --cycles <span class="number">1</span></code></pre>
+      <p>This runs one 5-minute window in simulation mode with a $10 budget. No real orders are placed. You should see debug output showing price checks, spread calculations, and hypothetical trades.</p>
+
+      <h2>Step 5: Go Live</h2>
+      <p>When you're satisfied with the simulation, run live mode:</p>
+      <pre><code>python main.py --mode live --budget <span class="number">10</span> --cycles <span class="number">1</span> --yes</code></pre>
+
+      <div class="info-box warning">
+        <h4>Start small!</h4>
+        <p>First live run with $10 budget. Verify orders fill correctly and you understand the flow before scaling up.</p>
+      </div>
+
+      <h2>Troubleshooting</h2>
+      <table>
+        <thead>
+          <tr><th>Problem</th><th>Solution</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>balance: 0</code> error on order</td><td>Deposit pUSD to your Polymarket wallet. Check <code>check_balance.py</code> in scripts/ folder.</td></tr>
+          <tr><td>FAK orders not filling</td><td>CLOB has limited liquidity at certain prices. The bot logs "no seller at X price". This is normal — wait for better prices.</td></tr>
+          <tr><td>API key error (400)</td><td>Regenerate API key on polymarket.com Settings page. Update .env with new credentials.</td></tr>
+          <tr><td>WebSocket connection errors</td><td>The bot auto-reconnects. Check your internet connection. No action needed.</td></tr>
+          <tr><td>Combined price always near $1.00</td><td>Binary tokens naturally sum to ~1.0. The bot waits for mid-range prices (both sides 40-60&cent;) that rarely occur. Run multiple windows.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Quick Test Script</h2>
+      <p>A standalone test script is included to verify your FAK limit order flow works:</p>
+      <pre><code>python test_buy.py</code></pre>
+      <p>This prompts you for a side (Up/Down) and price, then attempts a single $1 FAK limit buy. Use it to confirm your API credentials and balance are correct before running the full bot.</p>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 PolySpread Bot. All rights reserved. Not financial advice. Trade at your own risk.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
