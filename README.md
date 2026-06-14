@@ -26,7 +26,7 @@
 ## Quick Start (Free Framework)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/polymarket-btc-5m-bot.git
+git clone https://github.com/0xmodxyz/polymarket-btc-5m-bot.git
 cd polymarket-btc-5m-bot
 python -m venv .venv
 source .venv/bin/activate  # or .venv\Scripts\Activate on Windows
@@ -44,10 +44,6 @@ polymarket-free-bot/
 ├── requirements.txt     # Dependencies
 ├── .env.example         # Credentials template
 ├── README.md            # Setup guide
-├── scripts/             # Wallet deployment tools
-│   ├── deploy_deposit_wallet.py
-│   ├── approve_deposit_wallet.py
-│   └── test_connection.py
 ├── bot/
 │   ├── config.py        # Configuration loader
 │   ├── client.py        # CLOB API wrapper

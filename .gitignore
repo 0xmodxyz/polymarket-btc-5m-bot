@@ -9,6 +9,11 @@ venv/
 .pytest_cache/
 .mypy_cache/
 
+bot_pid.txt
+
+# Trial scripts — not part of the bot framework
+scripts/
+
 # Paid strategy module — not included in free framework
 bot/engines/sniper.py
 download/
