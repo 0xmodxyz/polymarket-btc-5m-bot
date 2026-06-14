@@ -1,8 +1,8 @@
 # PolySpread Bot — The Bot Behind JetFadil
 
-[![Website](https://img.shields.io/badge/website-polymarket--spread--bot.vercel.app-00c853?style=flat-square)](https://polymarket-spread-bot.vercel.app)
-[![Price](https://img.shields.io/badge/strategy%20module-%245-ff9800?style=flat-square)](https://polymarket-spread-bot.vercel.app/pricing)
-[![Report](https://img.shields.io/badge/research-JetFadil%20analysis-4fc3f7?style=flat-square)](https://polymarket-spread-bot.vercel.app/research)
+[![Website](https://img.shields.io/badge/website-polyspread.tech-00c853?style=flat-square)](https://polyspread.tech)
+[![Price](https://img.shields.io/badge/strategy%20module-%245-ff9800?style=flat-square)](https://polyspread.tech/pricing)
+[![Report](https://img.shields.io/badge/research-JetFadil%20analysis-4fc3f7?style=flat-square)](https://polyspread.tech/research)
 
 > **Free bot framework + $5 strategy module.** The same software powering the JetFadil wallet — 234,596 trades, +$43,577 net P&L in 26 days.
 
@@ -22,7 +22,7 @@
 | Operation | 24/7 continuous |
 | LP rewards earned | +$58,597 |
 
-[View full research report →](https://polymarket-spread-bot.vercel.app/research)
+[View full research report →](https://polyspread.tech/research)
 
 ---
 
@@ -70,7 +70,7 @@ The free framework connects to Polymarket. The **strategy module** adds the full
 - High-conviction dominance filter — flips trading P&L to +$40,727 (+4.35% ROI)
 - Drops into `bot/engines/sniper.py`
 
-**[Buy Strategy Module →](https://polymarket-spread-bot.vercel.app/pricing)**
+**[Buy Strategy Module →](https://polyspread.tech/pricing)**
 
 ### Payment
 
@@ -105,11 +105,11 @@ The **high-conviction mode** (dominance ≥2x) isolates 66,833 trades that win 9
 
 | Resource | Link |
 |----------|------|
-| Full JetFadil analysis | [research](https://polymarket-spread-bot.vercel.app/research) |
-| Strategy breakdown | [how-it-works](https://polymarket-spread-bot.vercel.app/how-it-works) |
-| Installation guide | [setup](https://polymarket-spread-bot.vercel.app/installation) |
-| Build your own (free guide) | [free-guide](https://polymarket-spread-bot.vercel.app/build-your-own) |
-| Pricing | [pricing](https://polymarket-spread-bot.vercel.app/pricing) |
+| Full JetFadil analysis | [research](https://polyspread.tech/research) |
+| Strategy breakdown | [how-it-works](https://polyspread.tech/how-it-works) |
+| Installation guide | [setup](https://polyspread.tech/installation) |
+| Build your own (free guide) | [free-guide](https://polyspread.tech/build-your-own) |
+| Pricing | [pricing](https://polyspread.tech/pricing) |
 | Wallet on Polymarket | [JetFadil](https://polymarket.com/@jetfadil) |
 
 ---
